@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
+import 'package:weather_app/app/dependency_injections.dart';
 import 'package:weather_app/counter/counter.dart';
 import 'package:weather_app/l10n/l10n.dart';
 
@@ -14,16 +15,18 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: const Color(0xFF13B9FF),
+    return DependejencyInjections(
+      child: MaterialApp(
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+          colorScheme: ColorScheme.fromSwatch(
+            accentColor: const Color(0xFF13B9FF),
+          ),
         ),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const CounterPage(),
       ),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
     );
   }
 }
