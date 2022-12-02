@@ -8,4 +8,13 @@ class ApiWeatherRepository implements WeatherRepository {
     // TODO: implement getWeather
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, dynamic>> getForecast({
+    required double lat,
+    required double lon,
+  }) {
+    // TODO: implement getForecast
+    throw UnimplementedError();
+  }
 }
