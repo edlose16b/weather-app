@@ -7,7 +7,7 @@ class WindModel extends Wind {
   });
 
   factory WindModel.fromJson(Map<String, dynamic> json) => WindModel(
-        speed: double.parse(json['speed'] as String),
+        speed: double.parse(json['speed'].toString()),
         deg: json['deg'] as int,
       );
 
