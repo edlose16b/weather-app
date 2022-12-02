@@ -7,8 +7,8 @@ class CoordModel extends Coord {
   });
 
   factory CoordModel.fromJson(Map<String, dynamic> json) => CoordModel(
-        lon: double.parse(json['lon'] as String),
-        lat: double.parse(json['lat'] as String),
+        lon: double.parse(json['lon'].toString()),
+        lat: double.parse(json['lat'].toString()),
       );
 
   Map<String, dynamic> toJson() => {
