@@ -19,7 +19,7 @@ void main() {
     expect(model, isA<MainWeatherData>());
   });
 
-  group('from json', () {
+  group('fromJson', () {
     Map<String, dynamic>? jsonMap;
 
     setUp(() {
@@ -87,7 +87,7 @@ void main() {
     });
   });
 
-  group('to json', () {
+  group('toJson', () {
     test('should return a JSON map containing the proper data', () {
       // arrange
       final model = MainWeatherDataModel(

@@ -61,4 +61,23 @@ void main() {
       );
     });
   });
+
+  group('to json', () {
+    test('should return a JSON map containing the proper data', () {
+      // arrange
+      final model = CloudsModel(
+        all: 1,
+      );
+
+      // act
+      final result = model.toJson();
+
+      // assert
+      final expectedJsonMap = <String, dynamic>{
+        'all': 1,
+      };
+
+      expect(result, expectedJsonMap);
+    });
+  });
 }

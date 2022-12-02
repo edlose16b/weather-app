@@ -66,4 +66,24 @@ void main() {
       );
     });
   });
+
+  group('to json', () {
+    test('should return a JSON map containing the proper data', () {
+      // arrange
+      final model = CoordModel(
+        lon: 1.2,
+        lat: -1.3,
+      );
+
+      // act
+      final result = model.toJson();
+
+      // assert
+      final expectedJsonMap = <String, dynamic>{
+        'lon': 1.2,
+        'lat': -1.3,
+      };
+      expect(result, expectedJsonMap);
+    });
+  });
 }
