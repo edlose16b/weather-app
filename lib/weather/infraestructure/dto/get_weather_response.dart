@@ -1,3 +1,4 @@
+import 'package:weather_app/weather/infraestructure/models/clouds_model.dart';
 import 'package:weather_app/weather/infraestructure/models/coord_model.dart';
 import 'package:weather_app/weather/infraestructure/models/main_weather_data_model.dart';
 import 'package:weather_app/weather/infraestructure/models/weather_model.dart';
@@ -34,7 +35,7 @@ class GetWeatherReponse {
             MainWeatherDataModel.fromJson(json['main'] as Map<String, dynamic>),
         visibility: json['visibility'] as int,
         wind: WindModel.fromJson(json['wind'] as Map<String, dynamic>),
-        clouds: Clouds.fromJson(json['clouds'] as Map<String, dynamic>),
+        clouds: CloudsModel.fromJson(json['clouds'] as Map<String, dynamic>),
         dt: json['dt'] as int,
         sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
         timezone: json['timezone'] as int,
@@ -49,7 +50,7 @@ class GetWeatherReponse {
   final MainWeatherDataModel main;
   final int visibility;
   final WindModel wind;
-  final Clouds clouds;
+  final CloudsModel clouds;
   final int dt;
   final Sys sys;
   final int timezone;
@@ -71,22 +72,6 @@ class GetWeatherReponse {
         'id': id,
         'name': name,
         'cod': cod,
-      };
-}
-
-class Clouds {
-  Clouds({
-    required this.all,
-  });
-
-  factory Clouds.fromJson(Map<String, dynamic> json) => Clouds(
-        all: json['all'] as int,
-      );
-
-  final int all;
-
-  Map<String, dynamic> toJson() => {
-        'all': all,
       };
 }
 
