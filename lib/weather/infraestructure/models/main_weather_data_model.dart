@@ -7,10 +7,10 @@ class MainWeatherDataModel extends MainWeatherData {
     required super.tempMin,
     required super.tempMax,
     required super.pressure,
-    required super.seaLevel,
-    required super.grndLevel,
     required super.humidity,
-    required super.tempKf,
+    super.seaLevel,
+    super.grndLevel,
+    super.tempKf,
   });
 
   factory MainWeatherDataModel.fromJson(Map<String, dynamic> json) =>
@@ -20,10 +20,10 @@ class MainWeatherDataModel extends MainWeatherData {
         tempMin: double.parse(json['temp_min'].toString()),
         tempMax: double.parse(json['temp_max'].toString()),
         pressure: json['pressure'] as int,
-        seaLevel: json['sea_level'] as int,
-        grndLevel: json['grnd_level'] as int,
+        seaLevel: json['sea_level'] as int?,
+        grndLevel: json['grnd_level'] as int?,
         humidity: json['humidity'] as int,
-        tempKf: double.parse(json['temp_kf'].toString()),
+        tempKf: double.tryParse(json['temp_kf'].toString()),
       );
 
   Map<String, dynamic> toJson() => {

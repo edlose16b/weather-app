@@ -5,7 +5,7 @@ import 'package:weather_app/weather/infraestructure/repositories/weather_reposit
 
 class ApiWeatherRepository implements WeatherRepository {
   @override
-  Future<Either<Failure, GetWeatherReponse>> getWeather(String city) {
+  Future<Either<Failure, GetWeatherResponse>> getWeather(String city) {
     // TODO: implement getWeather
     throw UnimplementedError();
   }

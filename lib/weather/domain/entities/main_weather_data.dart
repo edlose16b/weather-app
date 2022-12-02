@@ -5,10 +5,10 @@ class MainWeatherData {
     required this.tempMin,
     required this.tempMax,
     required this.pressure,
-    required this.seaLevel,
-    required this.grndLevel,
     required this.humidity,
-    required this.tempKf,
+     this.tempKf,
+    this.seaLevel,
+    this.grndLevel,
   });
 
   final double temp;
@@ -16,8 +16,8 @@ class MainWeatherData {
   final double tempMin;
   final double tempMax;
   final int pressure;
-  final int seaLevel;
-  final int grndLevel;
+  final int? seaLevel;
+  final int? grndLevel;
   final int humidity;
-  final double tempKf;
+  final double? tempKf;
 }

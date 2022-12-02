@@ -4,8 +4,8 @@ import 'package:weather_app/weather/infraestructure/models/main_weather_data_mod
 import 'package:weather_app/weather/infraestructure/models/weather_model.dart';
 import 'package:weather_app/weather/infraestructure/models/wind_model.dart';
 
-class GetWeatherReponse {
-  GetWeatherReponse({
+class GetWeatherResponse {
+  GetWeatherResponse({
     required this.coord,
     required this.weather,
     required this.base,
@@ -21,8 +21,8 @@ class GetWeatherReponse {
     required this.cod,
   });
 
-  factory GetWeatherReponse.fromJson(Map<String, dynamic> json) =>
-      GetWeatherReponse(
+  factory GetWeatherResponse.fromJson(Map<String, dynamic> json) =>
+      GetWeatherResponse(
         coord: CoordModel.fromJson(
           Map<String, dynamic>.from(json['coord'] as Map),
         ),
