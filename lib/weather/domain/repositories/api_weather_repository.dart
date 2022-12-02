@@ -1,10 +1,11 @@
-import 'package:weather_app/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
+import 'package:weather_app/core/errors/failures.dart';
+import 'package:weather_app/weather/infraestructure/dto/get_weather_response.dart';
 import 'package:weather_app/weather/infraestructure/repositories/weather_repository.dart';
 
 class ApiWeatherRepository implements WeatherRepository {
   @override
-  Future<Either<Failure, dynamic>> getWeather(String city) {
+  Future<Either<Failure, GetWeatherReponse>> getWeather(String city) {
     // TODO: implement getWeather
     throw UnimplementedError();
   }
