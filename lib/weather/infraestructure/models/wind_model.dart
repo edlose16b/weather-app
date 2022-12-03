@@ -4,15 +4,18 @@ class WindModel extends Wind {
   WindModel({
     required super.speed,
     required super.deg,
+    super.gust,
   });
 
   factory WindModel.fromJson(Map<String, dynamic> json) => WindModel(
         speed: double.parse(json['speed'].toString()),
         deg: json['deg'] as int,
+        gust: json['gust'] as double?,
       );
 
   Map<String, dynamic> toJson() => {
         'speed': speed,
         'deg': deg,
+        'gust': gust,
       };
 }
