@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:weather_app/weather/domain/entities/city.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_forecast_response.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_weather_response.dart';
@@ -129,7 +130,10 @@ GetForeCastResponse getForeCastResponseExampleModel = GetForeCastResponse(
         tempMin: -22.17,
         tempMax: -22.17,
         pressure: 985,
+        seaLevel: 985,
+        grndLevel: 746,
         humidity: 100,
+        tempKf: 0,
       ),
       weather: [
         WeatherModel(
@@ -144,7 +148,7 @@ GetForeCastResponse getForeCastResponseExampleModel = GetForeCastResponse(
       visibility: 3796,
       pop: 0,
       sys: ForeCastSysResponse(pod: 'd'),
-      dtTxt: DateTime.now(),
+      dtTxt: DateFormat('yyyy-MM-dd HH:mm:ss').parse('2022-12-03 03:00:00'),
     )
   ],
   city: CityModel(
