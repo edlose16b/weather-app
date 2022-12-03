@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_forecast_response.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_weather_response.dart';
-import 'package:weather_app/weather/infraestructure/repositories/weather_repository.dart';
+import 'package:weather_app/weather/domain/repositories/weather_repository.dart';
 
 class ApiWeatherRepository implements WeatherRepository {
   @override
