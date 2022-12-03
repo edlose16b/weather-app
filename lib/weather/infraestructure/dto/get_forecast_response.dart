@@ -1,11 +1,12 @@
+import 'package:equatable/equatable.dart';
 import 'package:weather_app/weather/infraestructure/models/city_model.dart';
 import 'package:weather_app/weather/infraestructure/models/clouds_model.dart';
 import 'package:weather_app/weather/infraestructure/models/main_weather_data_model.dart';
 import 'package:weather_app/weather/infraestructure/models/weather_model.dart';
 import 'package:weather_app/weather/infraestructure/models/wind_model.dart';
 
-class GetForeCastResponse {
-  GetForeCastResponse({
+class GetForeCastResponse extends Equatable {
+  const GetForeCastResponse({
     required this.cod,
     required this.message,
     required this.cnt,
@@ -38,10 +39,13 @@ class GetForeCastResponse {
   final int cnt;
   final List<ForeCastItemResponse> list;
   final CityModel city;
+
+  @override
+  List<Object?> get props => [cod, message, cnt, list, city];
 }
 
-class ForeCastItemResponse {
-  ForeCastItemResponse({
+class ForeCastItemResponse extends Equatable {
+  const ForeCastItemResponse({
     required this.dt,
     required this.main,
     required this.weather,
@@ -97,10 +101,14 @@ class ForeCastItemResponse {
   final ForeCastSysResponse sys;
   final DateTime dtTxt;
   final Snow? snow;
+
+  @override
+  List<Object?> get props =>
+      [dt, main, weather, clouds, wind, visibility, pop, sys, dtTxt, snow];
 }
 
-class Snow {
-  Snow({
+class Snow extends Equatable {
+  const Snow({
     required this.the3H,
   });
 
@@ -113,10 +121,13 @@ class Snow {
   Map<String, dynamic> toJson() => {
         '3h': the3H,
       };
+
+  @override
+  List<Object?> get props => [the3H];
 }
 
-class ForeCastSysResponse {
-  ForeCastSysResponse({
+class ForeCastSysResponse extends Equatable {
+  const ForeCastSysResponse({
     required this.pod,
   });
 
@@ -130,4 +141,7 @@ class ForeCastSysResponse {
   Map<String, dynamic> toJson() => {
         'pod': pod,
       };
+
+  @override
+  List<Object?> get props => [pod];
 }

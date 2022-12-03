@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:weather_app/weather/infraestructure/models/coord_model.dart';
 
-class City {
-  City({
+class City extends Equatable {
+  const City({
     required this.id,
     required this.name,
     required this.coord,
@@ -20,4 +21,8 @@ class City {
   final int timezone;
   final int sunrise;
   final int sunset;
+
+  @override
+  List<Object?> get props =>
+      [id, name, coord, country, population, timezone, sunrise, sunset];
 }

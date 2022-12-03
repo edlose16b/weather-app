@@ -1,11 +1,12 @@
+import 'package:equatable/equatable.dart';
 import 'package:weather_app/weather/infraestructure/models/clouds_model.dart';
 import 'package:weather_app/weather/infraestructure/models/coord_model.dart';
 import 'package:weather_app/weather/infraestructure/models/main_weather_data_model.dart';
 import 'package:weather_app/weather/infraestructure/models/weather_model.dart';
 import 'package:weather_app/weather/infraestructure/models/wind_model.dart';
 
-class GetWeatherResponse {
-  GetWeatherResponse({
+class GetWeatherResponse extends Equatable {
+  const GetWeatherResponse({
     required this.coord,
     required this.weather,
     required this.base,
@@ -73,10 +74,27 @@ class GetWeatherResponse {
         'name': name,
         'cod': cod,
       };
+
+  @override
+  List<Object?> get props => [
+        coord,
+        weather,
+        base,
+        main,
+        visibility,
+        wind,
+        clouds,
+        dt,
+        sys,
+        timezone,
+        id,
+        name,
+        cod,
+      ];
 }
 
-class Sys {
-  Sys({
+class Sys extends Equatable {
+  const Sys({
     required this.type,
     required this.id,
     required this.country,
@@ -105,4 +123,13 @@ class Sys {
         'sunrise': sunrise,
         'sunset': sunset,
       };
+
+  @override
+  List<Object?> get props => [
+        type,
+        id,
+        country,
+        sunrise,
+        sunset,
+      ];
 }
