@@ -11,7 +11,7 @@ import 'package:weather_app/weather/infraestructure/models/coord_model.dart';
 import '../../core/jsons.dart';
 
 void main() {
-  group('from Json', () {
+  group('fromJson', () {
     Map<String, dynamic>? jsonMap;
 
     setUp(() {

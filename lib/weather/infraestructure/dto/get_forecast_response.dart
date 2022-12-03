@@ -67,7 +67,7 @@ class ForeCastItemResponse {
         wind: WindModel.fromJson(json['wind'] as Map<String, dynamic>),
         visibility: json['visibility'] as int,
         pop: double.parse(json['pop'].toString()),
-        sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
+        sys: ForeCastSysResponse.fromJson(json['sys'] as Map<String, dynamic>),
         dtTxt: DateTime.parse(json['dt_txt'] as String),
         snow: json['snow'] == null
             ? null
@@ -94,7 +94,7 @@ class ForeCastItemResponse {
   final WindModel wind;
   final int visibility;
   final double pop;
-  final Sys sys;
+  final ForeCastSysResponse sys;
   final DateTime dtTxt;
   final Snow? snow;
 }
@@ -115,12 +115,13 @@ class Snow {
       };
 }
 
-class Sys {
-  Sys({
+class ForeCastSysResponse {
+  ForeCastSysResponse({
     required this.pod,
   });
 
-  factory Sys.fromJson(Map<String, dynamic> json) => Sys(
+  factory ForeCastSysResponse.fromJson(Map<String, dynamic> json) =>
+      ForeCastSysResponse(
         pod: json['pod'] as String,
       );
 
