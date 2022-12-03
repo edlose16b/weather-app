@@ -94,6 +94,7 @@ void main() {
       final expectedJsonMap = <String, dynamic>{
         'speed': 1.2,
         'deg': 1,
+        'gust': null,
       };
 
       expect(result, expectedJsonMap);
