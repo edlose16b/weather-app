@@ -75,7 +75,7 @@ class HomeHeader extends StatelessWidget {
         final items = state.cities
             .map(
               (e) => DropdownMenuItem(
-                value: e,
+                value: e.toLowerCase(),
                 child: Text(e),
               ),
             )
@@ -83,7 +83,7 @@ class HomeHeader extends StatelessWidget {
 
         return DropdownButtonFormField(
           hint: Text(context.l10n.select_city),
-          value: state.selected,
+          value: state.selected?.toLowerCase(),
           decoration: const InputDecoration(
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
