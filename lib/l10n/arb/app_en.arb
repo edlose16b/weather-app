@@ -1,7 +1,6 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+    "search_city": "Search city",
+    "select_city": "Select city",
+    "error_try_again": "Error, try again"
 }

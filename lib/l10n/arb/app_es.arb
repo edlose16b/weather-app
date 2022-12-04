@@ -1,7 +1,6 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
-    }
+    "search_city": "Buscar ciudad",
+    "select_city": "Seleccionar ciudad",
+    "error_try_again": "Error, intente de nuevo"
 }
