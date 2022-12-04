@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/l10n/l10n.dart';
 import 'package:weather_app/presentation/home/logic/cities_history_cubit.dart';
 import 'package:weather_app/presentation/home/logic/header_mode_cubit.dart';
 import 'package:weather_app/presentation/home/logic/search_cubit.dart';
@@ -81,7 +82,7 @@ class HomeHeader extends StatelessWidget {
             .toList();
 
         return DropdownButtonFormField(
-          hint: const Text('Select City'),
+          hint: Text(context.l10n.select_city),
           value: state.selected,
           decoration: const InputDecoration(
             border: OutlineInputBorder(
