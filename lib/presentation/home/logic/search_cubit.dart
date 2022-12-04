@@ -49,7 +49,7 @@ class SearchCubit extends Cubit<SearchCubitState> {
     response.fold(
       (l) => emit(state.copyWith(status: SearchCubitStatus.error)),
       (r) {
-        _removeRepeatDays(r.list);
+        _removeDuplicatedDays(r.list);
 
         emit(state.copyWith(forecastResponse: () => r));
         inspect(r);
@@ -57,7 +57,7 @@ class SearchCubit extends Cubit<SearchCubitState> {
     );
   }
 
-  void _removeRepeatDays(List<ForeCastItemResponse> list) {
+  void _removeDuplicatedDays(List<ForeCastItemResponse> list) {
     final dayTaken = <int>[];
     list.removeWhere((element) {
       final key = element.dtTxt.month + element.dtTxt.day;
