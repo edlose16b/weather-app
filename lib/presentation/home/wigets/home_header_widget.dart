@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:weather_app/presentation/home/logic/cities_history_cubit.dart';
 import 'package:weather_app/presentation/home/logic/header_mode_cubit.dart';
 import 'package:weather_app/presentation/home/logic/search_cubit.dart';
 
@@ -70,32 +73,33 @@ class HomeHeader extends StatelessWidget {
   }
 
   Widget _buildDropdownButton() {
-    return DropdownButtonFormField(
-      hint: const Text('Select City'),
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
-          // borderSide: BorderSide(color: Colors.black),
+    return BlocBuilder<CitiesCubit, CitiesCubitState>(
+      builder: (context, state) {
+        if (state.cities.isEmpty) return const SizedBox.shrink();
 
-          borderSide: BorderSide.none,
-          // gapPadding: 10,
-        ),
-      ),
-      items: const [
-        DropdownMenuItem(
-          child: Text('New York'),
-          value: 'New York',
-        ),
-        DropdownMenuItem(
-          child: Text('London'),
-          value: 'London',
-        ),
-        DropdownMenuItem(
-          child: Text('Tokyo'),
-          value: 'Tokyo',
-        ),
-      ],
-      onChanged: (value) {
-        print(value);
+        final items = state.cities
+            .map(
+              (e) => DropdownMenuItem(
+                value: e,
+                child: Text(e),
+              ),
+            )
+            .toList();
+
+        return DropdownButtonFormField(
+          hint: const Text('Select City'),
+          value: state.selected,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+            ),
+          ),
+          items: items,
+          onChanged: (value) {
+            context.read<CitiesCubit>().select(value!);
+            context.read<SearchCubit>().search(value);
+          },
+        );
       },
     );
   }

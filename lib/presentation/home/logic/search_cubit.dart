@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
@@ -12,6 +13,9 @@ class SearchCubit extends Cubit<SearchCubitState> {
 
   final WeatherRepository _weatherRepository;
 
+  Future<void> init() async {}
+
+  /// Search the weather from a query
   Future<void> search(String query) async {
     emit(SearchCubitState.loading());
 
@@ -26,15 +30,19 @@ class SearchCubit extends Cubit<SearchCubitState> {
             status: SearchCubitStatus.success,
             weatherResponse: () => r,
             forecastResponse: () => null,
+            query: () => query,
           ),
         );
         inspect(r);
-        getForecast(r.coord.lat, r.coord.lon);
+
+        unawaited(_weatherRepository.saveLastCity(query));
+        _getForecast(r.coord.lat, r.coord.lon);
       },
     );
   }
 
-  Future<void> getForecast(double lat, double lon) async {
+  /// Get forecast for the city
+  Future<void> _getForecast(double lat, double lon) async {
     log('SearchCubit.getForecast($lat,$lon)');
     final response = await _weatherRepository.getForecast(lat: lat, lon: lon);
 
@@ -71,6 +79,7 @@ class SearchCubitState {
     this.error = '',
     this.weatherResponse,
     this.forecastResponse,
+    this.query,
   });
   // loading
   factory SearchCubitState.loading() => const SearchCubitState(
@@ -81,6 +90,7 @@ class SearchCubitState {
   final String error;
   final GetWeatherResponse? weatherResponse;
   final GetForeCastResponse? forecastResponse;
+  final String? query;
 
   SearchCubitState copyWith({
     SearchCubitStatus? status,
@@ -88,12 +98,14 @@ class SearchCubitState {
     List<String>? cities,
     GetWeatherResponse? Function()? weatherResponse,
     GetForeCastResponse? Function()? forecastResponse,
+    String? Function()? query,
   }) {
     return SearchCubitState(
       status: status ?? this.status,
       error: error ?? this.error,
       weatherResponse: weatherResponse?.call() ?? this.weatherResponse,
       forecastResponse: forecastResponse?.call() ?? this.forecastResponse,
+      query: query?.call() ?? this.query,
     );
   }
 }

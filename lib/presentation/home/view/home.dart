@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/app/ui/colors.dart';
 import 'package:weather_app/app/ui/paddings.dart';
+import 'package:weather_app/presentation/home/logic/cities_history_cubit.dart';
 import 'package:weather_app/presentation/home/logic/search_cubit.dart';
 import 'package:weather_app/presentation/home/wigets/forecast_card.dart';
 import 'package:weather_app/presentation/home/wigets/home_header_widget.dart';
@@ -17,13 +18,26 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SearchCubit(weatherRepository: context.read()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SearchCubit(weatherRepository: context.read()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CitiesCubit(weatherRepository: context.read())..loadCities(),
+        ),
+      ],
       child: Scaffold(
         extendBodyBehindAppBar: true,
         extendBody: true,
         body: BlocConsumer<SearchCubit, SearchCubitState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state.status == SearchCubitStatus.success) {
+              context.read<CitiesCubit>().addCity(state.query!);
+              context.read<CitiesCubit>().select(state.query!);
+            }
+          },
           builder: (context, state) {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),
