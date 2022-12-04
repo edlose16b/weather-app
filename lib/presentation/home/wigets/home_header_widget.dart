@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_app/presentation/home/logic/cities_history_cubit.dart';
 import 'package:weather_app/presentation/home/logic/header_mode_cubit.dart';
 import 'package:weather_app/presentation/home/logic/search_cubit.dart';
@@ -18,17 +15,14 @@ class HomeHeader extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Align(
-                child: FaIcon(
-                  FontAwesomeIcons.locationPin,
-                  size: 18,
-                ),
+              const Icon(
+                Icons.pin_drop,
+                size: 18,
               ),
               const SizedBox(width: 10),
               SizedBox(
-                height: 60,
+                height: 55,
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: state == HeaderMode.dropdown
                     ? _buildDropdownButton()
