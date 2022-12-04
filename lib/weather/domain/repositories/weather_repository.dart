@@ -10,4 +10,7 @@ abstract class WeatherRepository {
     required double lat,
     required double lon,
   });
+
+  Future<Either<Failure, List<String>>> getLastCities();
+  Future<Either<Failure, void>> saveLastCity(String city);
 }

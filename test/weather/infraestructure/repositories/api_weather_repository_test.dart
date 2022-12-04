@@ -3,21 +3,30 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/weather/domain/repositories/weather_repository.dart';
+import 'package:weather_app/weather/infraestructure/datasources/local_weather_datasource.dart';
 import 'package:weather_app/weather/infraestructure/datasources/remote_weather_datasource.dart';
-import 'package:weather_app/weather/infraestructure/repositories/api_weather_repository.dart';
+import 'package:weather_app/weather/infraestructure/repositories/weather_repository.dart';
 
 import '../../core/jsons.dart';
 
 class MockRemoteWeatherDataSource extends Mock
     implements RemoteWeatherDataSource {}
 
+class MockLocalWeatherDataSource extends Mock
+    implements LocalWeatherDataSource {}
+
 void main() {
   late RemoteWeatherDataSource dataSource;
+  late LocalWeatherDataSource localDataSource;
   late WeatherRepository repository;
 
   setUp(() {
     dataSource = MockRemoteWeatherDataSource();
-    repository = ApiWeatherRepository(remoteWeatherDataSource: dataSource);
+    localDataSource = MockLocalWeatherDataSource();
+    repository = AppWeatherRepository(
+      remoteWeatherDataSource: dataSource,
+      localWeatherDataSource: localDataSource,
+    );
   });
 
   group('getWeather', () {
@@ -71,6 +80,32 @@ void main() {
       final result = await repository.getForecast(lat: 1, lon: 1);
       // assert
       expect(result, Left(ServerFailure()));
+    });
+  });
+
+  group('getLastCities', () {
+    test('should return a list of cities', () async {
+      // arrange
+      when(() => localDataSource.getLastCities()).thenAnswer(
+        (_) async => ['London', 'Madrid'],
+      );
+
+      // act
+      final result = await repository.getLastCities();
+
+      result.fold((l) => null, (r) {
+        // assert
+        expect(r, ['London', 'Madrid']);
+      });
+    });
+
+    test('should return a ServerFailure when it fails', () async {
+      // arrange
+      when(() => localDataSource.getLastCities()).thenThrow(Exception());
+      // act
+      final result = await repository.getLastCities();
+      // assert
+      expect(result, Left(CacheFailure()));
     });
   });
 }

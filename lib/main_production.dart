@@ -5,9 +5,14 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/app/app.dart';
 import 'package:weather_app/bootstrap.dart';
 
 void main() {
-  bootstrap(() => const App());
+  bootstrap(
+    (SharedPreferences sharedPreferences) => App(
+      sharedPreferences: sharedPreferences,
+    ),
+  );
 }

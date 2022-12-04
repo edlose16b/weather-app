@@ -10,6 +10,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -25,15 +26,21 @@ class AppBlocObserver extends BlocObserver {
   }
 }
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+Future<void> bootstrap(
+    FutureOr<Widget> Function(SharedPreferences sharedPreferences)
+        builder) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
   Bloc.observer = AppBlocObserver();
-
   await runZonedGuarded(
-    () async => runApp(await builder()),
+    () async {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      runApp(await builder(sharedPreferences));
+    },
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

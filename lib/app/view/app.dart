@@ -6,17 +6,22 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/app/dependency_injections.dart';
 import 'package:weather_app/app/ui/colors.dart';
 import 'package:weather_app/l10n/l10n.dart';
 import 'package:weather_app/presentation/home/view/home.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
-
+  const App({
+    super.key,
+    required this.sharedPreferences,
+  });
+  final SharedPreferences sharedPreferences;
   @override
   Widget build(BuildContext context) {
     return DependejencyInjections(
+      sharedPreferences: sharedPreferences,
       child: MaterialApp(
         theme: ThemeData(
           appBarTheme: const AppBarTheme(color: AppColors.primaryColor),
