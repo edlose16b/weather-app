@@ -14,13 +14,13 @@ class ApiWeatherRepository implements WeatherRepository {
   final RemoteWeatherDataSource _remoteWeatherDataSource;
   @override
   Future<Either<Failure, GetWeatherResponse>> getWeather(String city) async {
-    try {
+    // try {
       final weather = await _remoteWeatherDataSource.getWeather(city);
       return Right(weather);
-    } catch (e) {
-      Logger().e(e);
-      return Left(ServerFailure());
-    }
+    // } catch (e) {
+    //   Logger().e(e);
+    //   return Left(ServerFailure());
+    // }
   }
 
   @override

@@ -13,7 +13,7 @@ class SearchCubit extends Cubit<SearchCubitState> {
   final WeatherRepository _weatherRepository;
 
   Future<void> search(String query) async {
-    emit(state.copyWith(status: SearchCubitStatus.loading));
+    emit(SearchCubitState.loading());
 
     log('SearchCubit.search($query)');
     final response = await _weatherRepository.getWeather(query);
@@ -72,6 +72,10 @@ class SearchCubitState {
     this.weatherResponse,
     this.forecastResponse,
   });
+  // loading
+  factory SearchCubitState.loading() => const SearchCubitState(
+        status: SearchCubitStatus.loading,
+      );
 
   final SearchCubitStatus status;
   final String error;

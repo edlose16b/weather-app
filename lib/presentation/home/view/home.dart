@@ -8,6 +8,8 @@ import 'package:weather_app/presentation/home/logic/search_cubit.dart';
 import 'package:weather_app/presentation/home/wigets/forecast_card.dart';
 import 'package:weather_app/presentation/home/wigets/home_header_widget.dart';
 import 'package:weather_app/presentation/home/wigets/weather_detail_widget.dart';
+import 'package:weather_app/presentation/shared/skeletos/forecast_skeleto.dart';
+import 'package:weather_app/presentation/shared/skeletos/weather_detail_skeleto.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_forecast_response.dart';
 
 class HomeView extends StatelessWidget {
@@ -39,11 +41,12 @@ class HomeView extends StatelessWidget {
                   children: [
                     const HomeHeader(),
                     const SizedBox(height: Paddings.medium),
-                    if (state.weatherResponse != null)
+                    if (state.weatherResponse == null)
+                      const HomeHeaderSkeleto()
+                    else
                       WeatherDetailWidget(response: state.weatherResponse!),
                     const SizedBox(height: Paddings.medium),
-                    if (state.forecastResponse != null)
-                      _buildForecast(state.forecastResponse!)
+                    _buildForecast(state.forecastResponse)
                   ],
                 ),
               ),
@@ -54,7 +57,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildForecast(GetForeCastResponse forecast) {
+  Widget _buildForecast(GetForeCastResponse? forecast) {
+    if (forecast == null) return const ForecastSkeleto();
     return SizedBox(
       height: 190,
       child: ListView.builder(

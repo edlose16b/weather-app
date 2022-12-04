@@ -95,23 +95,23 @@ class GetWeatherResponse extends Equatable {
 
 class Sys extends Equatable {
   const Sys({
-    required this.type,
-    required this.id,
     required this.country,
     required this.sunrise,
     required this.sunset,
+    this.type,
+    this.id,
   });
 
   factory Sys.fromJson(Map<String, dynamic> json) => Sys(
-        type: json['type'] as int,
-        id: json['id'] as int,
+        type: json['type'] as int?,
+        id: json['id'] as int?,
         country: json['country'] as String,
         sunrise: json['sunrise'] as int,
         sunset: json['sunset'] as int,
       );
 
-  final int type;
-  final int id;
+  final int? type;
+  final int? id;
   final String country;
   final int sunrise;
   final int sunset;

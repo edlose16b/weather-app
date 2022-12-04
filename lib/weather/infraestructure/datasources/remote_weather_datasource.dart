@@ -28,7 +28,7 @@ class OpenWeatherRemoteDataSource implements RemoteWeatherDataSource {
 
   @override
   Future<GetWeatherResponse> getWeather(String city) async {
-    try {
+    // try {
       final response = await _client.get<dynamic>(
         'weather?q=$city&appid=${_env.openWeatherApiKey}&lang=es&units=metric',
       );
@@ -38,10 +38,10 @@ class OpenWeatherRemoteDataSource implements RemoteWeatherDataSource {
       return GetWeatherResponse.fromJson(
         response.data as Map<String, dynamic>,
       );
-    } catch (e) {
-      Logger().e(e);
-      throw ServerException();
-    }
+    // } catch (e) {
+    //   Logger().e(e);
+    //   throw ServerException();
+    // }
   }
 
   @override
