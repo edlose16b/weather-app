@@ -14,15 +14,17 @@ class DevEnv implements Env {
   String openWeatherApiKey = _DevEnv.openWeatherApiKey;
 
   @override
-  String openWeatherApiUrl = '';
+  @EnviedField(varName: 'OPEN_WEATHER_API_URL', obfuscate: true)
+  String openWeatherApiUrl = _DevEnv.openWeatherApiUrl;
 }
 
 @Envied(path: '.env')
 class ProdEnv implements Env {
   @override
-  @EnviedField(varName: 'OPEN_WEATHER_API_KEY', obfuscate: true)
+  @EnviedField(varName: 'OPEN_WEATHER_API_URL', obfuscate: true)
   String openWeatherApiKey = _DevEnv.openWeatherApiKey;
 
   @override
-  String openWeatherApiUrl = '';
+  @EnviedField(varName: 'OPEN_WEATHER_API_URL', obfuscate: true)
+  String openWeatherApiUrl = _DevEnv.openWeatherApiUrl;
 }
