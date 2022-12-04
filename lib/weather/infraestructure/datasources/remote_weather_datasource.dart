@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:weather_app/core/env/env.dart';
 import 'package:weather_app/core/errors/exceptions.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_forecast_response.dart';
@@ -38,6 +39,7 @@ class OpenWeatherRemoteDataSource implements RemoteWeatherDataSource {
         response.data as Map<String, dynamic>,
       );
     } catch (e) {
+      Logger().e(e);
       throw ServerException();
     }
   }
@@ -50,7 +52,7 @@ class OpenWeatherRemoteDataSource implements RemoteWeatherDataSource {
     try {
       final response = await _client.get<dynamic>(
         'forecast?lat=$lat&lon=$lon&appid=${_env.openWeatherApiKey}&lang=es&'
-        'units=metric&cnt=1',
+        'units=metric&cnt=24',
       );
 
       if (response.statusCode != HttpStatus.ok) throw ServerException();
@@ -59,6 +61,7 @@ class OpenWeatherRemoteDataSource implements RemoteWeatherDataSource {
         response.data as Map<String, dynamic>,
       );
     } catch (e) {
+      Logger().e(e);
       throw ServerException();
     }
   }

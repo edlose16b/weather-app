@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:logger/logger.dart';
 import 'package:weather_app/core/errors/failures.dart';
 import 'package:weather_app/weather/domain/repositories/weather_repository.dart';
 import 'package:weather_app/weather/infraestructure/datasources/remote_weather_datasource.dart';
@@ -17,6 +18,7 @@ class ApiWeatherRepository implements WeatherRepository {
       final weather = await _remoteWeatherDataSource.getWeather(city);
       return Right(weather);
     } catch (e) {
+      Logger().e(e);
       return Left(ServerFailure());
     }
   }
