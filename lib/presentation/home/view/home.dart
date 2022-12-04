@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/app/ui/colors.dart';
 import 'package:weather_app/app/ui/paddings.dart';
+import 'package:weather_app/l10n/l10n.dart';
 import 'package:weather_app/presentation/home/logic/cities_history_cubit.dart';
 import 'package:weather_app/presentation/home/logic/search_cubit.dart';
 import 'package:weather_app/presentation/home/wigets/forecast_card.dart';
@@ -39,35 +40,67 @@ class HomeView extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: getColorsFromWeather(
-                    state.weatherResponse?.weather.first.main ?? '',
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height,
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: getColorsFromWeather(
+                      state.weatherResponse?.weather.first.main ?? '',
+                    ),
                   ),
                 ),
-              ),
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    const HomeHeader(),
-                    const SizedBox(height: Paddings.medium),
-                    if (state.weatherResponse == null)
-                      const HomeHeaderSkeleto()
-                    else
-                      WeatherDetailWidget(response: state.weatherResponse!),
-                    const SizedBox(height: Paddings.medium),
-                    _buildForecast(state.forecastResponse)
-                  ],
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      const HomeHeader(),
+                      const SizedBox(height: Paddings.medium),
+                      _buildBody(context, state),
+                    ],
+                  ),
                 ),
               ),
             );
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, SearchCubitState state) {
+    if (state.status == SearchCubitStatus.initial) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height * .8,
+        child: Center(
+          child: Text(context.l10n.search_city),
+        ),
+      );
+    }
+
+    if (state.status == SearchCubitStatus.error) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height * .8,
+        child: Center(
+          child: Text(context.l10n.error_try_again),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        if (state.weatherResponse == null)
+          const HomeHeaderSkeleto()
+        else
+          WeatherDetailWidget(response: state.weatherResponse!),
+        const SizedBox(height: Paddings.medium),
+        _buildForecast(state.forecastResponse),
+      ],
     );
   }
 
