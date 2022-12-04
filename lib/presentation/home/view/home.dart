@@ -22,7 +22,8 @@ class HomeView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SearchCubit(weatherRepository: context.read()),
+          create: (context) =>
+              SearchCubit(weatherRepository: context.read())..init(),
         ),
         BlocProvider(
           create: (context) =>

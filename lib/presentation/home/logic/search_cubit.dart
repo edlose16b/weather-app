@@ -13,7 +13,14 @@ class SearchCubit extends Cubit<SearchCubitState> {
 
   final WeatherRepository _weatherRepository;
 
-  Future<void> init() async {}
+  Future<void> init() async {
+    final response = await _weatherRepository.getLastCities();
+    response.fold((l) => null, (r) {
+      if (r.isNotEmpty) {
+        search(r.first);
+      }
+    });
+  }
 
   /// Search the weather from a query
   Future<void> search(String query) async {
