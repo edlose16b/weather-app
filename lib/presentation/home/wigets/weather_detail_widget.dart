@@ -1,25 +1,40 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:weather_app/app/helpers/weather_helper.dart';
 import 'package:weather_app/app/ui/paddings.dart';
 import 'package:weather_app/presentation/home/wigets/min_max_temperature_widget.dart';
+import 'package:weather_app/weather/infraestructure/dto/get_weather_response.dart';
 
 class WeatherDetailWidget extends StatelessWidget {
-  const WeatherDetailWidget({super.key});
+  const WeatherDetailWidget({
+    super.key,
+    required this.response,
+  });
 
+  final GetWeatherResponse response;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _buildWeatherImage(),
         const SizedBox(height: Paddings.medium),
-        Text('Hot', style: Theme.of(context).textTheme.titleLarge),
-        Text('32°', style: Theme.of(context).textTheme.headline1),
+        Text(
+          response.weather.first.description,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        Text(
+          '${response.main.temp}°',
+          style: Theme.of(context).textTheme.headline1,
+        ),
         const SizedBox(height: Paddings.medium),
         SizedBox(
           width: MediaQuery.of(context).size.width * .8,
-          child: const MinMaxTemperatureWidget(),
-        )
+          child: MinMaxTemperatureWidget(
+            min: response.main.tempMin,
+            max: response.main.tempMax,
+          ),
+        ),
       ],
     );
   }
@@ -30,8 +45,7 @@ class WeatherDetailWidget extends StatelessWidget {
       width: 200,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(
-              'https://cdn-icons-png.flaticon.com/512/6393/6393305.png'),
+          image: AssetImage(getImageFromWeather(response.weather.first.main)),
           fit: BoxFit.cover,
         ),
       ),

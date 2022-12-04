@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:weather_app/app/helpers/date_helper.dart';
+import 'package:weather_app/app/helpers/weather_helper.dart';
 import 'package:weather_app/presentation/home/wigets/min_max_temperature_widget.dart';
+import 'package:weather_app/weather/infraestructure/dto/get_forecast_response.dart';
 
 class ForecastCard extends StatelessWidget {
-  const ForecastCard({super.key});
+  const ForecastCard({super.key, required this.item});
+  final ForeCastItemResponse item;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +27,17 @@ class ForecastCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text('Tomorrow', style: Theme.of(context).textTheme.bodyText1),
+          Text(
+            DateFormat('EEEE').format(item.dtTxt),
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
           const SizedBox(height: 10),
           _buildWeatherImage(),
           const SizedBox(height: 20),
-          const MinMaxTemperatureWidget(),
+          MinMaxTemperatureWidget(
+            min: item.main.tempMin,
+            max: item.main.tempMax,
+          ),
         ],
       ),
     );
@@ -34,12 +45,11 @@ class ForecastCard extends StatelessWidget {
 
   Widget _buildWeatherImage() {
     return Container(
-      height: 50,
-      width: 50,
+      height: 35,
+      width: 35,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(
-              'https://cdn-icons-png.flaticon.com/512/6393/6393305.png'),
+          image: AssetImage(getImageFromWeather(item.weather.first.main)),
           fit: BoxFit.cover,
         ),
       ),
