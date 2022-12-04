@@ -8,7 +8,7 @@ class AppColors {
     Color(0xffffbe94),
   ];
 
-  static const List<Color> cloudyGradientColors = [
+  static const List<Color> coldGradientColors = [
     Color(0xff6dfae7),
     Color(0xff72efee),
   ];
@@ -17,7 +17,7 @@ class AppColors {
     Color(0xff5bcaf8),
   ];
 
-  static const List<Color> coldGradientColors = [
+  static const List<Color> cloudyGradientColors = [
     Color(0xffb2f7ef),
     Color(0xff51c4d3),
   ];
