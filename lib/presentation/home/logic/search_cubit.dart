@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:weather_app/weather/domain/repositories/weather_repository.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_forecast_response.dart';
 import 'package:weather_app/weather/infraestructure/dto/get_weather_response.dart';
@@ -56,7 +58,7 @@ class SearchCubit extends Cubit<SearchCubitState> {
     response.fold(
       (l) => emit(state.copyWith(status: SearchCubitStatus.error)),
       (r) {
-        _removeDuplicatedDays(r.list);
+        removeDuplicatedDays(r.list);
 
         emit(state.copyWith(forecastResponse: () => r));
         inspect(r);
@@ -64,7 +66,8 @@ class SearchCubit extends Cubit<SearchCubitState> {
     );
   }
 
-  void _removeDuplicatedDays(List<ForeCastItemResponse> list) {
+  @visibleForTesting
+  void removeDuplicatedDays(List<ForeCastItemResponse> list) {
     final dayTaken = <int>[];
     list.removeWhere((element) {
       final key = element.dtTxt.month + element.dtTxt.day;
@@ -80,7 +83,7 @@ class SearchCubit extends Cubit<SearchCubitState> {
 
 enum SearchCubitStatus { initial, loading, success, error }
 
-class SearchCubitState {
+class SearchCubitState extends Equatable {
   const SearchCubitState({
     this.status = SearchCubitStatus.initial,
     this.error = '',
@@ -115,4 +118,13 @@ class SearchCubitState {
       query: query?.call() ?? this.query,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        status,
+        error,
+        weatherResponse,
+        forecastResponse,
+        query,
+      ];
 }
