@@ -30,46 +30,56 @@ class HomeView extends StatelessWidget {
               CitiesCubit(weatherRepository: context.read())..loadCities(),
         ),
       ],
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        body: BlocConsumer<SearchCubit, SearchCubitState>(
-          listener: (context, state) {
-            if (state.status == SearchCubitStatus.success) {
-              context.read<CitiesCubit>().addCity(state.query!);
-              context.read<CitiesCubit>().select(state.query!);
-            }
-          },
-          builder: (context, state) {
-            return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height,
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: getColorsFromWeather(
-                      state.weatherResponse?.weather.first.main ?? '',
-                    ),
-                  ),
-                ),
-                child: SafeArea(
-                  child: Column(
-                    children: [
-                      const HomeHeader(),
-                      const SizedBox(height: Paddings.medium),
-                      _buildBody(context, state),
-                    ],
+      child: const HomeContent(),
+    );
+  }
+}
+
+@visibleForTesting
+class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      body: BlocConsumer<SearchCubit, SearchCubitState>(
+        listener: (context, state) {
+          if (state.status == SearchCubitStatus.success) {
+            context.read<CitiesCubit>().addCity(state.query!);
+            context.read<CitiesCubit>().select(state.query!);
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: getColorsFromWeather(
+                    state.weatherResponse?.weather.first.main ?? '',
                   ),
                 ),
               ),
-            );
-          },
-        ),
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    const HomeHeader(),
+                    const SizedBox(height: Paddings.medium),
+                    _buildBody(context, state),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -77,6 +87,7 @@ class HomeView extends StatelessWidget {
   Widget _buildBody(BuildContext context, SearchCubitState state) {
     if (state.status == SearchCubitStatus.initial) {
       return SizedBox(
+        key: const Key('search_city'),
         height: MediaQuery.of(context).size.height * .8,
         child: Center(
           child: Text(context.l10n.search_city),
@@ -86,6 +97,7 @@ class HomeView extends StatelessWidget {
 
     if (state.status == SearchCubitStatus.error) {
       return SizedBox(
+        key: const Key('error_message'),
         height: MediaQuery.of(context).size.height * .8,
         child: Center(
           child: Text(context.l10n.error_try_again),
@@ -94,6 +106,7 @@ class HomeView extends StatelessWidget {
     }
 
     return Column(
+      key: const Key('weather_detail'),
       children: [
         if (state.weatherResponse == null)
           const HomeHeaderSkeleto()

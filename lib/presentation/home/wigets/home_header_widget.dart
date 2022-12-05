@@ -12,45 +12,57 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HeaderModeCubit(),
-      child: BlocConsumer<HeaderModeCubit, HeaderMode>(
-        listener: (context, state) {},
+      child: BlocBuilder<HeaderModeCubit, HeaderMode>(
         builder: (context, state) {
-          return Row(
-            children: [
-              const Icon(
-                Icons.pin_drop,
-                size: 18,
-              ),
-              const SizedBox(width: 10),
-              SizedBox(
-                height: 55,
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: state == HeaderMode.dropdown
-                    ? _buildDropdownButton()
-                    : _buildSearchTextField(context),
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {
-                  context.read<HeaderModeCubit>().changeMode(
-                        state == HeaderMode.dropdown
-                            ? HeaderMode.input
-                            : HeaderMode.dropdown,
-                      );
-                },
-                icon: state == HeaderMode.dropdown
-                    ? const Icon(Icons.search)
-                    : const Icon(Icons.cancel),
-              )
-            ],
-          );
+          return HomeHeaderContent(state: state);
         },
       ),
+    );
+  }
+}
+
+@visibleForTesting
+class HomeHeaderContent extends StatelessWidget {
+  const HomeHeaderContent({super.key, required this.state});
+  final HeaderMode state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      key: const Key('home_header'),
+      children: [
+        const Icon(
+          Icons.pin_drop,
+          size: 18,
+        ),
+        const SizedBox(width: 10),
+        SizedBox(
+          height: 55,
+          width: MediaQuery.of(context).size.width * 0.6,
+          child: state == HeaderMode.dropdown
+              ? _buildDropdownButton()
+              : _buildSearchTextField(context),
+        ),
+        const Spacer(),
+        IconButton(
+          onPressed: () {
+            context.read<HeaderModeCubit>().changeMode(
+                  state == HeaderMode.dropdown
+                      ? HeaderMode.input
+                      : HeaderMode.dropdown,
+                );
+          },
+          icon: state == HeaderMode.dropdown
+              ? const Icon(Icons.search)
+              : const Icon(Icons.cancel),
+        )
+      ],
     );
   }
 
   Widget _buildSearchTextField(BuildContext context) {
     return TextFormField(
+      key: const Key('search_text_field'),
       textInputAction: TextInputAction.search,
       autofocus: true,
       decoration: const InputDecoration(
@@ -82,6 +94,7 @@ class HomeHeader extends StatelessWidget {
             .toList();
 
         return DropdownButtonFormField(
+          key: const Key('dropdown_cities'),
           hint: Text(context.l10n.select_city),
           value: state.selected?.toLowerCase(),
           decoration: const InputDecoration(
