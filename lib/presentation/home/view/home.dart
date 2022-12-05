@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/app/ui/colors.dart';
 import 'package:weather_app/app/ui/paddings.dart';
 import 'package:weather_app/l10n/l10n.dart';
-import 'package:weather_app/presentation/home/logic/cities_history_cubit.dart';
+import 'package:weather_app/presentation/home/logic/cities_cubit.dart';
 import 'package:weather_app/presentation/home/logic/search_cubit.dart';
 import 'package:weather_app/presentation/home/wigets/forecast_card.dart';
 import 'package:weather_app/presentation/home/wigets/home_header_widget.dart';

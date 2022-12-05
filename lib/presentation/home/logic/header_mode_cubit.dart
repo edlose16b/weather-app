@@ -6,6 +6,7 @@ class HeaderModeCubit extends Cubit<HeaderMode> {
   void changeMode(HeaderMode mode) {
     emit(mode);
   }
+  
 }
 
 enum HeaderMode { dropdown, input }
