@@ -21,6 +21,12 @@ This project contains 3 flavors:
 To run the desired flavor either use the launch configuration in VSCode/Android Studio or use the following commands:
 
 ```sh
+# copy the .env.example file to .env and .env.dev
+$ cp .env.example .env && cp .env.example .env.dev
+
+# Execute build runner 
+$ flutter pub run build_runner build --delete-conflicting-outputs
+
 # Development
 $ flutter run --flavor development --target lib/main_development.dart
 
