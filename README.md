@@ -24,6 +24,9 @@ To run the desired flavor either use the launch configuration in VSCode/Android 
 # copy the .env.example file to .env and .env.dev
 $ cp .env.example .env && cp .env.example .env.dev
 
+# get packages
+$ flutter pub get
+
 # Execute build runner 
 $ flutter pub run build_runner build --delete-conflicting-outputs
 
